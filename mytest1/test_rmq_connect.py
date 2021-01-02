@@ -29,14 +29,14 @@ def test_rmq_connect(rmq_root):
     exchange_name = 'todelete_exchangename_Oohebae2sesh'
     queue_name = 'todelete_queuename_Oohebae2sesh'
     routing_key = 'todelete_routingkey_Oohebae2sesh'
-    channel = rmq.channel()
+    channel = rmq_root.channel()
 
     _declare_pipe(channel, exchange_name, queue_name, routing_key)
 
     # !!! body must be byte string, because of raw data
     test_body = b'test'
-    amqp.put(channel, exchange_name, routing_key, test_body)
-    return_body, return_properties = amqp.get(channel, queue_name)
+    rmq.put(channel, exchange_name, routing_key, test_body)
+    return_body, return_properties = rmq.get(channel, queue_name)
 
     _delete_pipe(channel, exchange_name, queue_name)
 
